@@ -37,7 +37,9 @@ def login():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-        if username == "admin" and password == "password":   # default credentials
+
+        # ✅ Update these to your own credentials
+        if username == "asfiya@gmail.com" and password == "mysecurepass":
             session["logged_in"] = True
             return redirect(url_for("history"))
         else:
