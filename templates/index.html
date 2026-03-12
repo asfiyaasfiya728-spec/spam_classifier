@@ -1,82 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>AI Spam Email Detector</title>
-<style>
-body {
-    font-family: Arial;
-    background: linear-gradient(120deg,#667eea,#764ba2);
-    color: white;
-    text-align: center;
-    padding: 40px;
-}
-.container {
-    background: white;
-    color: black;
-    padding: 30px;
-    border-radius: 10px;
-    width: 420px;
-    margin: auto;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-}
-input, textarea {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-}
-button {
-    background: #667eea;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-}
-button:hover {
-    background: #4a54e1;
-}
-.result {
-    margin-top: 20px;
-    font-size: 20px;
-    font-weight: bold;
-}
-.history {
-    margin-top: 20px;
-    display: inline-block;
-    text-decoration: none;
-    background: #764ba2;
-    color: white;
-    padding: 10px 15px;
-    border-radius: 5px;
-}
-.history:hover {
-    background: #5a3782;
-}
-</style>
+    <meta charset="UTF-8">
+    <title>AI Spam Email Detector</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial;
+            background: linear-gradient(120deg,#667eea,#764ba2);
+            color: white;
+            text-align: center;
+            padding: 40px;
+        }
+        .container {
+            background: white;
+            color: black;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 500px;
+            margin: auto;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-<h1>AI Spam Email Detector</h1>
-<div class="container">
-    <form method="POST">
-        <h3>Email Subject</h3>
-        <input type="text" name="subject" placeholder="Enter email subject" required>
-        <h3>Email Message</h3>
-        <textarea name="message" rows="4" placeholder="Enter email message" required></textarea>
-        <button type="submit">Check Email</button>
-    </form>
+    <h1 class="mb-4">AI Spam Email Detector</h1>
+    <div class="container">
+        <form method="POST">
+            <div class="mb-3">
+                <label for="subject" class="form-label">Email Subject</label>
+                <input type="text" class="form-control" id="subject" name="subject" placeholder="Enter email subject" required>
+            </div>
+            <div class="mb-3">
+                <label for="message" class="form-label">Email Message</label>
+                <textarea class="form-control" id="message" name="message" rows="4" placeholder="Enter email message" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Check Email</button>
+        </form>
 
-    {% if prediction %}
-    <div class="result">
-        Result: {{prediction}} <br>
-        Confidence: {{confidence}} %
+        {% if prediction %}
+        <div class="result alert alert-info mt-4">
+            Result: {{prediction}} <br>
+            Confidence: {{confidence}} %
+        </div>
+        {% endif %}
+
+        <a href="/history" class="btn btn-secondary mt-3 w-100">View Spam History</a>
     </div>
-    {% endif %}
-
-    <br>
-    <a href="/history" class="history">View Spam History</a>
-</div>
 </body>
 </html>
