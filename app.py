@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, Response
 import csv
 import os
+from datetime import datetime   # ✅ Added for timestamps
 
 app = Flask(__name__)
 spam_history = []
@@ -17,12 +18,13 @@ def index():
         # Run spam detection
         prediction, confidence = run_spam_model(subject, message)
 
-        # Save to history
+        # Save to history with timestamp
         spam_history.append({
             "subject": subject,
             "message": message,
             "prediction": prediction,
-            "confidence": confidence
+            "confidence": confidence,
+            "time": datetime.now().strftime("%Y-%m-%d %H:%M:%S")   # ✅ New field
         })
 
     return render_template("index.html",
@@ -39,9 +41,10 @@ def history():
 @app.route("/download")
 def download():
     def generate():
-        data = [["Subject", "Message", "Prediction", "Confidence"]]
+        # ✅ Added Time column to CSV
+        data = [["Subject", "Message", "Prediction", "Confidence", "Time"]]
         for item in spam_history:
-            data.append([item["subject"], item["message"], item["prediction"], item["confidence"]])
+            data.append([item["subject"], item["message"], item["prediction"], item["confidence"], item["time"]])
         output = ""
         for row in data:
             output += ",".join(map(str, row)) + "\n"
