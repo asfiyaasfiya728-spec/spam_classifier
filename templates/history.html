@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Spam Detection History</title>
+<style>
+body {
+    font-family: Arial;
+    background: #f4f4f4;
+    text-align: center;
+}
+table {
+    margin: auto;
+    border-collapse: collapse;
+    width: 80%;
+    background: white;
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+th {
+    background: #667eea;
+    color: white;
+}
+button, a.download {
+    margin-top: 20px;
+    display: inline-block;
+    text-decoration: none;
+    background: #667eea;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+button:hover, a.download:hover {
+    background: #4a54e1;
+}
+.chart-container {
+    width: 250px;   /* smaller width */
+    height: 250px;  /* smaller height */
+    margin: 30px auto;
+}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<h1>Spam Detection History</h1>
+
+<table>
+    <tr>
+        <th>Subject</th>
+        <th>Message</th>
+        <th>Result</th>
+        <th>Confidence</th>
+    </tr>
+    {% for item in history %}
+    <tr>
+        <td>{{item.subject}}</td>
+        <td>{{item.message}}</td>
+        <td>{{item.prediction}}</td>
+        <td>{{item.confidence}}%</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<br>
+<a href="/" class="download">Back to Home</a>
+<a href="/download" class="download">Download Report (CSV)</a>
+
+<h2>Spam Detection Chart</h2>
+<div class="chart-container">
+  <canvas id="spamChart"></canvas>
+</div>
+
+<h2>Spam vs Not Spam Counts</h2>
+<div class="chart-container">
+  <canvas id="barChart"></canvas>
+</div>
+
+<script>
+const ctx = document.getElementById('spamChart');
+const spamChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+        labels: ['Spam', 'Not Spam'],
+        datasets: [{
+            data: [{{ spam_count }}, {{ not_spam_count }}],
+            backgroundColor: ['#e74c3c', '#2ecc71']
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false
+    }
+});
+
+const barCtx = document.getElementById('barChart');
+const barChart = new Chart(barCtx, {
+    type: 'bar',
+    data: {
+        labels: ['Spam', 'Not Spam'],
+        datasets: [{
+            label: 'Email Count',
+            data: [{{ spam_count }}, {{ not_spam_count }}],
+            backgroundColor: ['#e74c3c', '#2ecc71']
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            y: { beginAtZero: true }
+        }
+    }
+});
+</script>
+</body>
+</html>

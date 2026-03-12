@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>AI Spam Email Detector</title>
+<style>
+body {
+    font-family: Arial;
+    background: linear-gradient(120deg,#667eea,#764ba2);
+    color: white;
+    text-align: center;
+    padding: 40px;
+}
+.container {
+    background: white;
+    color: black;
+    padding: 30px;
+    border-radius: 10px;
+    width: 420px;
+    margin: auto;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+button {
+    background: #667eea;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+button:hover {
+    background: #4a54e1;
+}
+.result {
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: bold;
+}
+.history {
+    margin-top: 20px;
+    display: inline-block;
+    text-decoration: none;
+    background: #764ba2;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+.history:hover {
+    background: #5a3782;
+}
+</style>
+</head>
+<body>
+<h1>AI Spam Email Detector</h1>
+<div class="container">
+    <form method="POST">
+        <h3>Email Subject</h3>
+        <input type="text" name="subject" placeholder="Enter email subject" required>
+        <h3>Email Message</h3>
+        <textarea name="message" rows="4" placeholder="Enter email message" required></textarea>
+        <button type="submit">Check Email</button>
+    </form>
+
+    {% if prediction %}
+    <div class="result">
+        Result: {{prediction}} <br>
+        Confidence: {{confidence}} %
+    </div>
+    {% endif %}
+
+    <br>
+    <a href="/history" class="history">View Spam History</a>
+</div>
+</body>
+</html>
