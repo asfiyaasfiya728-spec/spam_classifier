@@ -1,0 +1,11 @@
+# Ignore dataset and model files
+spam.csv
+spam_model.pkl
+
+# Ignore Python cache
+__pycache__/
+*.pyc
+
+# Ignore environment files
+venv/
+.env
